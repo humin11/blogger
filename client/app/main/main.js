@@ -5,6 +5,11 @@ angular.module('mybloggerApp')
     $routeProvider
       .when('/', {
         templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        resolve: {
+	        translation: function(RequireTranslations) {
+	          return RequireTranslations('page/home');
+	        }
+	      }
       });
   });

@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('mybloggerApp')
-  .controller('NavbarCtrl', function ($scope, $location, Auth) {
+  .controller('NavbarCtrl', function ($scope, $location, Auth, $translate) {
     $scope.menu = [{
-      'title': 'Home',
+      'title': 'views.navs.Home',
       'link': '/'
     },{
-      'title':'Blog',
+      'title':'views.navs.Message',
+      'link':'/message'
+    },{
+      'title':'views.navs.Blog',
       'link':'/blog'
     }];
 
@@ -22,5 +25,9 @@ angular.module('mybloggerApp')
 
     $scope.isActive = function(route) {
       return route === $location.path();
+    };
+
+    $scope.changeLanguage = function () {
+      $translate.use($scope.key);
     };
   });

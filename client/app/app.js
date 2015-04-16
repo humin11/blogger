@@ -6,7 +6,8 @@ angular.module('mybloggerApp', [
   'ngSanitize',
   'ngRoute',
   'btford.socket-io',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'pascalprecht.translate'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
@@ -17,6 +18,31 @@ angular.module('mybloggerApp', [
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
   })
+
+  .config(['$translateProvider', function ($translateProvider) {
+
+    // Configure Angular Translate
+    $translateProvider.useLoader('$translatePartialLoader', {
+      urlTemplate: 'i18n/{part}/{lang}.json'
+    });
+
+    // Set default translation
+    $translateProvider.preferredLanguage('en_US');
+
+  }])
+
+  .factory('RequireTranslations', ['$translatePartialLoader', '$translate', function ($translatePartialLoader, $translate) {
+    return function () {
+      // Add Global translation
+      $translatePartialLoader.addPart('app');
+
+      // Add partials
+      angular.forEach(arguments, function (translationKey) {
+        $translatePartialLoader.addPart(translationKey);
+      });
+      return $translate.refresh();
+    }
+  }])
 
   .factory('authInterceptor', function ($rootScope, $q, $cookieStore, $location) {
     return {
