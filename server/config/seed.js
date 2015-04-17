@@ -8,6 +8,7 @@
 var Thing = require('../api/thing/thing.model');
 var User = require('../api/user/user.model');
 var Message = require('../api/message/message.model')
+var Blog = require('../api/blog/blog.model')
 
 Thing.find({}).remove(function() {
   Thing.create({
@@ -51,4 +52,8 @@ User.find({}).remove(function() {
 
 Message.find({}).remove(function(){
   Message.create({name:'abc',info:'test124',create_at:new Date()});
+});
+
+Blog.find({}).remove(function(){
+  Blog.create({title:'test blog', content:'test blog content', create_at: new Date()})
 });
